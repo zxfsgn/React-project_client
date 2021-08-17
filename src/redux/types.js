@@ -1,0 +1,8 @@
+export const LOGIN_SUCCESS = "USER/LOGIN_SUCCESS"
+export const ERROR = "APP/ERROR"
+export const LOGOUT = "USER/LOGOUT"
+export const GET_PROFILE = "APP/GET_PROFILE"
+export const GET_NEWS = "APP/GET_NEWS"
+export const POST_NEWS = "APP/POST_NEWS"
+export const SHOW_LOADING = "APP/SHOW_LOADING"
+export const HIDE_LOADING = "APP/HIDE_LOADING"
