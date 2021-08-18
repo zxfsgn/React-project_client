@@ -13,7 +13,6 @@ function Profile({ getProfile, token, isFetching, profile }) {
   }, [])
 
   function show() {
-    console.log(profile)
     const { data: { city, languages } } = profile
     return (
       <div>
