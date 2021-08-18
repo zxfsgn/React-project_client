@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { ROOT_URL } from '../constants'
 
 export const Registration = () => {
   const [state, setState] = useState({ email: '', password: '' })
@@ -8,7 +9,7 @@ export const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await fetch('https://mighty-cliffs-11442.herokuapp.com/api/auth/register', {
+    await fetch(`${ROOT_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

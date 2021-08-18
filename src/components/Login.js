@@ -53,6 +53,11 @@ function Login({ error, loggedIn, handleLogin, isFetching }) {
     })
   }
 
+  const redirect = (e) => {
+    e.preventDefault()
+    history.push('/registr')
+  }
+
   return (
     <form className="login" onSubmit={handleSubmit}>
       <div>
@@ -68,7 +73,7 @@ function Login({ error, loggedIn, handleLogin, isFetching }) {
       <input type="submit"></input>
       {error && <div>{error}</div>}
       <div>
-        <a href="./registr">Регистрация</a>
+        <a href={'../registr'} onClick={redirect}>Регистрация</a>
       </div>
     </form>
   )
