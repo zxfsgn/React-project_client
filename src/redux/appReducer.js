@@ -1,4 +1,4 @@
-import { ERROR, GET_NEWS, GET_PROFILE, SHOW_LOADING, HIDE_LOADING, POST_NEWS } from "./types"
+import { ERROR, GET_NEWS, GET_PROFILE, SHOW_LOADING, HIDE_LOADING, POST_NEWS, DELETE_ARTICLE, EDIT_ARTICLE } from "./types"
 
 const initialState = {
   news: null,
@@ -21,6 +21,10 @@ export const appReducer = (state = initialState, action) => {
       return { ...state, error: '', news: action.payload }
     case POST_NEWS:
       return { ...state, news: state.news.concat(action.payload) }
+    case DELETE_ARTICLE:
+      return { ...state, news: action.payload }
+    case EDIT_ARTICLE:
+      return { ...state, news: action.payload }
     default: return state
   }
 }

@@ -1,5 +1,5 @@
 import { NEWS_URI, PROFILE_URI, ROOT_URL } from "../constants"
-import { ERROR, GET_NEWS, GET_PROFILE, LOGIN_SUCCESS, LOGOUT, SHOW_LOADING, HIDE_LOADING, POST_NEWS } from "./types"
+import { ERROR, GET_NEWS, GET_PROFILE, LOGIN_SUCCESS, LOGOUT, SHOW_LOADING, HIDE_LOADING, POST_NEWS, EDIT_ARTICLE, DELETE_ARTICLE } from "./types"
 
 export function showLoading() {
   return {
@@ -135,6 +135,46 @@ export function postNews(article) {
       })
       const json = await response.json()
       dispatch({ type: POST_NEWS, payload: { ...article, id: json.id } })
+      fail('')
+    } catch (e) {
+
+    } finally {
+    }
+  }
+}
+
+export function editArticle(article) {
+  return async dispatch => {
+    try {
+      const response = await fetch(NEWS_URI, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(article)
+      })
+      const news = await response.json()
+      dispatch({ type: EDIT_ARTICLE, payload: news })
+      fail('')
+    } catch (e) {
+
+    } finally {
+    }
+  }
+}
+
+export function deleteArticle(article) {
+  return async dispatch => {
+    try {
+      const response = await fetch(NEWS_URI, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: article })
+      })
+      const news = await response.json()
+      dispatch({ type: DELETE_ARTICLE, payload: news })
       fail('')
     } catch (e) {
 

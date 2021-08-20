@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import Loading from './Loading'
 import './styles/news.scss'
 
-function News({ isFetching, getNews, postNews, news }) {
+function News({ isFetching, getNews, postNews, news, deleteArticle }) {
 
   const [state, setState] = useState({ title: '', text: '' })
+
+  const history = useHistory()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,12 +29,15 @@ function News({ isFetching, getNews, postNews, news }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (news) {
+  const handleDelete = (id, e) => {
+    e.preventDefault()
+    deleteArticle(id)
+  }
 
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [news])
+  const handleEdit = (e, id) => {
+    e.preventDefault()
+    history.push(`news/${id}/edit`)
+  }
 
   function show() {
     return (
@@ -39,8 +45,10 @@ function News({ isFetching, getNews, postNews, news }) {
         <h1>News</h1>
         <ul className="news__list">
           {news.map(item => <li key={item.id}>
-            <h2>{item.title}</h2>
+            <a href="./article">{item.title}</a>
             <div>{item.text}</div>
+            <span onClick={(e) => handleEdit(e, item.id)}>Редактировать</span>
+            <span onClick={(e) => handleDelete(item.id, e)}>Удалить</span>
           </li>)}
         </ul>
         <footer>Всего новостей: {news.length}</footer>

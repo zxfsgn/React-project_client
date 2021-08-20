@@ -2,14 +2,16 @@ import { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
+import Article from './components/Article';
+import Edit from './components/Edit';
 import Home from './components/Home';
 import Login from './components/Login';
 import News from './components/News';
 import Profile from './components/Profile';
 import { Registration } from './components/Registration';
-import { getNews, getProfile, handleLogin, logIn, logOut, postNews } from "./redux/actions"
+import { deleteArticle, getNews, getProfile, handleLogin, logIn, logOut, postNews } from "./redux/actions"
 
-function App({ loggedIn, handleLogin, error, getProfile, token, profile, isFetching, getNews, news, postNews }) {
+function App({ loggedIn, handleLogin, error, getProfile, token, profile, isFetching, getNews, news, postNews, editArticle, deleteArticle }) {
   const dispatch = useDispatch()
   useEffect(() => {
     if (localStorage.getItem('loggedIn')) {
@@ -43,6 +45,12 @@ function App({ loggedIn, handleLogin, error, getProfile, token, profile, isFetch
           </ul>
         </nav>
         <Switch>
+          <Route path="/news/:article/edit">
+            <Edit />
+          </Route>
+          <Route path="/news/:article/">
+            <Article deleteArticle={deleteArticle} />
+          </Route>
           <Route path="/registr">
             <Registration />
           </Route>
@@ -50,7 +58,7 @@ function App({ loggedIn, handleLogin, error, getProfile, token, profile, isFetch
             <Login handleLogin={handleLogin} loggedIn={loggedIn} error={error} isFetching={isFetching} />
           </Route>
           <Route path="/news">
-            <News isFetching={isFetching} getNews={getNews} postNews={postNews} news={news} />
+            <News editArticle={editArticle} deleteArticle={deleteArticle} isFetching={isFetching} getNews={getNews} postNews={postNews} news={news} />
           </Route>
           <Route path="/profile">
             {loggedIn ? <Profile logOut={logOut} getProfile={getProfile} token={token} profile={profile} error={error} isFetching={isFetching} /> : <Redirect to="/login/profile" />}
@@ -70,7 +78,8 @@ const mapDispatchToProps = dispatch => {
     logOut: logOut,
     getProfile: (token) => dispatch(getProfile(token)),
     getNews: () => dispatch(getNews()),
-    postNews: (article) => dispatch(postNews(article))
+    postNews: (article) => dispatch(postNews(article)),
+    deleteArticle: (article) => dispatch(deleteArticle(article))
   }
 }
 
